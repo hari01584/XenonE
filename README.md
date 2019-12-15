@@ -12,7 +12,8 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Installing
 
-Install Link - play.google.com/store/apps/details?id=cf.androefi.xenone
+
+Install Link - <a href="https://play.google.com/store/apps/details?id=cf.androefi.xenone">Playstore Link</a>
 
 
 ## Contributing
@@ -22,7 +23,7 @@ No One Right Now
 
 ## Authors
 
-* **Agent_Orange** - *Initial work* - [Agent_Orange](https://github.com/XenonE)
+* **Agent_Orange** - *Initial work* - [XenonE](https://github.com/XenonE)
 
 See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
 
@@ -36,7 +37,7 @@ See also the list of [contributors](https://github.com/your/project/contributors
 
 ## License
 
-Copyright (C) 2019  Harishankar Kumar
+    Copyright (C) 2019  Harishankar Kumar
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
