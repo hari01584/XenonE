@@ -9,7 +9,7 @@
 
     <TextView
         android:id="@+id/pdata"
-        android:layout_width="350dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="2dp"
         android:fontFamily="cursive"
@@ -22,7 +22,7 @@
 
     <TextView
         android:id="@+id/shop"
-        android:layout_width="350dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:fontFamily="cursive"
@@ -36,11 +36,9 @@
 
     <Button
         android:id="@+id/srank"
-        android:layout_width="350dp"
+        android:layout_width="match_parent"
         android:layout_height="54dp"
-        android:layout_marginStart="43dp"
         android:layout_marginTop="10dp"
-        android:layout_marginEnd="43dp"
         android:text="S Rank Unlock (30Days)"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -49,7 +47,7 @@
 
     <TextView
         android:id="@+id/intr"
-        android:layout_width="350dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:fontFamily="cursive"
@@ -63,10 +61,8 @@
 
     <Button
         android:id="@+id/dn01"
-        android:layout_width="350dp"
+        android:layout_width="match_parent"
         android:layout_height="54dp"
-        android:layout_marginStart="43dp"
-        android:layout_marginEnd="43dp"
         android:text="Donate 3$"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -74,10 +70,8 @@
 
     <Button
         android:id="@+id/dn02"
-        android:layout_width="350dp"
+        android:layout_width="match_parent"
         android:layout_height="54dp"
-        android:layout_marginStart="43dp"
-        android:layout_marginEnd="43dp"
         android:text="Donate 10$"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -85,11 +79,9 @@
 
     <Button
         android:id="@+id/dn03"
-        android:layout_width="350dp"
+        android:layout_width="match_parent"
         android:layout_height="54dp"
-        android:layout_marginStart="43dp"
         android:layout_marginTop="2dp"
-        android:layout_marginEnd="43dp"
         android:text="Donate 50$ (OMG)"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -97,7 +89,7 @@
 
     <TextView
         android:id="@+id/inf"
-        android:layout_width="350dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:fontFamily="cursive"

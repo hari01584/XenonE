@@ -23,11 +23,9 @@
 
     <EditText
         android:id="@+id/editText4"
-        android:layout_width="330dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="41dp"
         android:layout_marginTop="7dp"
-        android:layout_marginEnd="41dp"
         android:ems="10"
         android:hint="Password"
         android:inputType="textPassword"
@@ -37,10 +35,8 @@
 
     <Button
         android:id="@+id/button"
-        android:layout_width="325dp"
+        android:layout_width="match_parent"
         android:layout_height="54dp"
-        android:layout_marginStart="43dp"
-        android:layout_marginEnd="43dp"
         android:text="Login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -48,30 +44,25 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="330dp"
+        android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:layout_marginStart="32dp"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="5dp"
         android:text="MADE BY Agent_Orange"
+        android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button" />
 
 
     <TextView
         android:id="@+id/logabut"
-        android:layout_width="330dp"
+        android:layout_width="match_parent"
         android:layout_height="400dp"
         android:layout_marginTop="20dp"
         android:fontFamily="cursive"
         android:text="INFO => You Can Use This Tab To Login Into Your Account (Please Remember That Loggin Is Important :)!"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.469"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
 

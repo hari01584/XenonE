@@ -9,26 +9,24 @@
 
     <Button
         android:id="@+id/bcw"
-        android:layout_width="325dp"
+        android:layout_width="match_parent"
         android:layout_height="54dp"
         android:layout_marginTop="15dp"
         android:text="Get Your BCUBES!"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 
     <TextView
         android:id="@+id/hel7"
-        android:layout_width="330dp"
+        android:layout_width="match_parent"
         android:layout_height="400dp"
         android:layout_marginTop="30dp"
         android:fontFamily="cursive"
         android:text="This Tool Allows You To Get 4 Cubes A Day Without Watching Ads!! Consider Donating Me If This Works And You Use IT :)"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.469"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bcw" />
 

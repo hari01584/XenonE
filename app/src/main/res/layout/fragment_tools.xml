@@ -9,7 +9,7 @@
 
     <Button
         android:id="@+id/sexec"
-        android:layout_width="325dp"
+        android:layout_width="match_parent"
         android:layout_height="54dp"
         android:layout_marginTop="15dp"
         android:text="Execute S Rank TASK!!"
@@ -28,12 +28,12 @@
 
     <TextView
         android:id="@+id/inf1"
-        android:layout_width="330dp"
+        android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_marginStart="32dp"
         android:layout_marginTop="2dp"
         android:layout_marginEnd="5dp"
         android:text="Free Account Giveaway!!"
+        android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -43,7 +43,7 @@
 
     <EditText
         android:id="@+id/email"
-        android:layout_width="325dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Enter Your Email!"
@@ -54,7 +54,7 @@
 
     <Button
         android:id="@+id/freac"
-        android:layout_width="325dp"
+        android:layout_width="match_parent"
         android:layout_height="54dp"
         android:layout_marginTop="10dp"
         android:text="Claim Your Account!!"
@@ -64,7 +64,7 @@
 
     <TextView
         android:id="@+id/inf3"
-        android:layout_width="325dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:fontFamily="cursive"
@@ -85,7 +85,7 @@
 
     <TextView
         android:id="@+id/hel11"
-        android:layout_width="330dp"
+        android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_marginTop="20dp"
         android:fontFamily="cursive"
