@@ -39,10 +39,10 @@
     <TextView
         android:id="@+id/hel2"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:fontFamily="cursive"
-        android:text="Here You Can Set Gif In Your Clan Or Profile, Please Note That Only Giphy And Tenor Works In Setting Of Gif, Also If You Are Setting Gif For Clan, You Must Be Elder Or Cheif To Do That!"
+        android:text="Set your profile a gif image here! Please note that unlike shown in my first yt video, now you need to upload a file(image or gif) which you want to set, This is to have better control to user, as many asked about how to manually upload their handmade gifs!\n\nBut please note that not all kind of gif's can be uploaded, I tested and could use tenor downloaded .gif files, But many other extensional gif like .webm doesn't work, Also there is some size limitation, So you might need to try couple of times before setting gif!"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

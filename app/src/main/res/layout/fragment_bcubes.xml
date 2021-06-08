@@ -51,17 +51,6 @@
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/bcw" />
 
-
-    <TextView
-      android:id="@+id/hel7"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:fontFamily="cursive"
-      android:text="This Tool Allows You To Get 4 Cubes A Day Without Watching Ads!! Consider Donating Me If This Works And You Use IT :)"
-      android:textSize="20sp"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent" />
     <Button
       android:id="@+id/button2"
       android:layout_width="0dp"
@@ -72,5 +61,15 @@
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/powerSpinnerView" />
 
+    <TextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="20dp"
+      android:fontFamily="cursive"
+      android:textSize="20sp"
+      android:text="Yow! So unlike bcubes, I also added one more interesting feature, That is this *Rickroll items*, Using this you can effectively get a free item on the start of game, These are the same item you would get after watching an advertisement(which award you some item at startup), Pleae note that i only added few games but there might be many minigames i missed (there were lot of them) So notify me if there's any other minigame which award item from watching video, Which i missed in this release :D"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/button2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

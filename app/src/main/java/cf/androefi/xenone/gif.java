@@ -127,10 +127,20 @@ public class gif extends Fragment {
     }
 
     private void launchImagePicker() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startForProfileImageResult.launch(intent);
+        ImagePicker.with(this)
+            .galleryOnly()
+            .createIntent(new Function1<Intent, Unit>() {
+                @Override
+                public Unit invoke(Intent intent) {
+                    startForProfileImageResult.launch(intent);
+                    return null;
+                }
+            });
+
+//        Intent intent = new Intent();
+//        intent.setType("image/*");
+//        intent.setAction(Intent.ACTION_GET_CONTENT);
+//        startForProfileImageResult.launch(intent);
     }
 
 }

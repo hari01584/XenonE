@@ -1,5 +1,6 @@
 package cf.androefi.xenone;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
@@ -20,6 +21,7 @@ import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 
+import com.koushikdutta.ion.ProgressCallback;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -317,8 +319,24 @@ public class Util {
             e.printStackTrace();
         }
 
+        ProgressDialog mProgressDialog;
+        mProgressDialog = new ProgressDialog(context);
+        mProgressDialog.setMessage("Uploading..");
+        mProgressDialog.setIndeterminate(false);
+        mProgressDialog.setMax(100);
+        mProgressDialog.setProgress(0);
+        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        mProgressDialog.show();
         Ion.with(context)
             .load("POST", "http://d32gv25kv9q34j.cloudfront.net/user/api/v1/file?fileName=1")
+            .uploadProgressHandler(new ProgressCallback() {
+                @Override
+                public void onProgress(long uploaded, long total) {
+                    int mProgress   = (int) (100*uploaded / total);
+                    mProgressDialog.setProgress(mProgress);
+                    Log.d(TAG, uploaded+ "->" + total+"->"+mProgress);
+                }
+            })
             .setHeader("userId", userId)
             .setHeader("Access-Token", access_token)
             .setTimeout(60 * 60 * 1000)
@@ -327,10 +345,11 @@ public class Util {
             .setCallback(new FutureCallback<JsonObject>() {
                 @Override
                 public void onCompleted(Exception e, JsonObject res) {
+                    mProgressDialog.dismiss();
                     if (res == null) {
                         e.printStackTrace();
                         Toast.makeText(context, "UNKNOWN ERROR! " + e.getMessage(),
-                            Toast.LENGTH_SHORT).show();
+                            Toast.LENGTH_LONG).show();
                         return;
                     }
                     String dText = res.toString();
@@ -342,11 +361,11 @@ public class Util {
                     }
                     else if(dText.contains("image not valid")){
                         Toast.makeText(context, "Invalid image. Maybe size too big or bad extension?",
-                            Toast.LENGTH_SHORT).show();
+                            Toast.LENGTH_LONG).show();
                     }
                     else {
                         Toast.makeText(context, "UNKNOWN ERROR! " + dText,
-                            Toast.LENGTH_SHORT).show();
+                            Toast.LENGTH_LONG).show();
                     }
                 }
             });
@@ -500,24 +519,24 @@ public class Util {
     }
 
     public static void executeSSS(final Context context) {
-        Ion.with(context)
-                .load("POST", "http://skullzbones.com/xcv/bmg/Play/SSS.php")
-                .setHeader("dVid", android_id)
-                .setHeader("tId", Supp.ptok)
-                .setHeader("userId", userId)
-                .setHeader("Access-Token", access_token)
-                .asString()
-                .setCallback(new FutureCallback<String>() {
-                    @Override
-                    public void onCompleted(Exception e, String res) {
-                        if(res==null){
-                            e.printStackTrace();
-                            return;
-                        }
-                        Toast.makeText(context, res,
-                                    Toast.LENGTH_SHORT).show();
-                    }
-                });
+//        Ion.with(context)
+//                .load("POST", "http://skullzbones.com/xcv/bmg/Play/SSS.php")
+//                .setHeader("dVid", android_id)
+//                .setHeader("tId", Supp.ptok)
+//                .setHeader("userId", userId)
+//                .setHeader("Access-Token", access_token)
+//                .asString()
+//                .setCallback(new FutureCallback<String>() {
+//                    @Override
+//                    public void onCompleted(Exception e, String res) {
+//                        if(res==null){
+//                            e.printStackTrace();
+//                            return;
+//                        }
+//                        Toast.makeText(context, res,
+//                                    Toast.LENGTH_SHORT).show();
+//                    }
+//                });
 
     }
 

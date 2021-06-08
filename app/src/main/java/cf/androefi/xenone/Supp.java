@@ -12,17 +12,30 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
-
-import com.anjlab.android.iab.v3.BillingProcessor;
-import com.anjlab.android.iab.v3.TransactionDetails;
+import com.android.billingclient.api.BillingClient;
+import com.android.billingclient.api.BillingClient.BillingResponseCode;
+import com.android.billingclient.api.BillingClient.SkuType;
+import com.android.billingclient.api.BillingClientStateListener;
+import com.android.billingclient.api.BillingFlowParams;
+import com.android.billingclient.api.BillingResult;
+import com.android.billingclient.api.ConsumeParams;
+import com.android.billingclient.api.Purchase;
+import com.android.billingclient.api.PurchasesUpdatedListener;
+import com.android.billingclient.api.SkuDetails;
+import com.android.billingclient.api.SkuDetailsParams;
+import com.android.billingclient.api.SkuDetailsResponseListener;
+import java.util.ArrayList;
+import java.util.List;
+import org.jetbrains.annotations.NotNull;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Supp extends Fragment implements BillingProcessor.IBillingHandler {
+public class Supp extends Fragment implements PurchasesUpdatedListener {
 
-    BillingProcessor bp;
+    private BillingClient billingClient;
+
 
     public Supp() {
         // Required empty public constructor
@@ -31,10 +44,61 @@ public class Supp extends Fragment implements BillingProcessor.IBillingHandler {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        bp = new BillingProcessor(getContext(), "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA0QvAges3cM0mlHxbxMboENV1cTO0DirM4D/LfVwcnY/gmwONn21RsQjDCM8vCOMVhOcqvZdjx1Qam3EW8WUeVI1B8e8kE4k+xU0qdMxl4WMivhld61qpGK60nwGWVhWZAxC9BC6aeUipcGn9mHhsLEo4sZzjwdfARnyTty2zSKfGtbfAwBnjytEYzgVU2zJ/S9Iyxfy/GYRDPYFzUYFuGzIL5wTubN89nExtW03CXigsZ397AS7P5BxsmVQ3NhzT+rb6ObcACQHy//Sud5/sWIpoLyOV+KtgtmdGHoSTfCiTX5uPnVgwIMuwplMopslOh9IsN2KJhy3Tmhd1OvnW2wIDAQAB", this);
-        bp.initialize();
+
+        initialize();
     }
 
+    public void initialize() {
+        billingClient = BillingClient
+            .newBuilder(getActivity())
+            .setListener(this)
+            .enablePendingPurchases()
+            .build();
+        billingClient.startConnection(new BillingClientStateListener() {
+            @Override
+            public void onBillingSetupFinished(BillingResult billingResult) {
+                makeSkuList();
+                Toast.makeText(getContext(), "Successfully init billing services!", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onBillingServiceDisconnected() {
+                // Logic from ServiceConnection.onServiceDisconnected should be moved here.
+            }
+        });
+    }
+
+    List<SkuDetails> skuList;
+    public void makeSkuList(){
+        List<String> s = new ArrayList<>();
+        s.add("xenon_donate_01");
+        s.add("xenon_donate_02");
+        s.add("xenon_donate_03");
+        SkuDetailsParams.Builder params = SkuDetailsParams.newBuilder();
+        params.setSkusList(s).setType(SkuType.INAPP);
+        billingClient.querySkuDetailsAsync(params.build(),
+            new SkuDetailsResponseListener() {
+                @Override
+                public void onSkuDetailsResponse(BillingResult billingResult,
+                    List<SkuDetails> skuDetailsList) {
+                    skuList = new ArrayList<>(skuDetailsList);
+                }
+            });
+    }
+
+    @Override
+    public void onPurchasesUpdated(@NonNull @NotNull BillingResult billingResult,
+        @Nullable @org.jetbrains.annotations.Nullable List<Purchase> list) {
+        if (billingResult.getResponseCode() == BillingResponseCode.OK) {
+            Toast.makeText(getContext(), "Thanks for this donation! :D", Toast.LENGTH_LONG).show();
+            for (Purchase p : list) {
+                ConsumeParams consumeParams = ConsumeParams.newBuilder()
+                    .setPurchaseToken(p.getPurchaseToken())
+                    .build();
+                billingClient.consumeAsync(consumeParams, null);
+            }
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -63,8 +127,7 @@ public class Supp extends Fragment implements BillingProcessor.IBillingHandler {
         dn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                bp.purchase(getActivity(), "xenon_donate_01");
-                bp.consumePurchase("xenon_donate_01");
+                donateInitiate(0);
             }
 
         });
@@ -74,8 +137,7 @@ public class Supp extends Fragment implements BillingProcessor.IBillingHandler {
         dn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                bp.purchase(getActivity(), "xenon_donate_02");
-                bp.consumePurchase("xenon_donate_02");
+                donateInitiate(1);
             }
 
         });
@@ -86,8 +148,7 @@ public class Supp extends Fragment implements BillingProcessor.IBillingHandler {
         dn3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                bp.purchase(getActivity(), "xenon_donate_03");
-                bp.consumePurchase("xenon_donate_03");
+                donateInitiate(2);
             }
 
         });
@@ -96,43 +157,11 @@ public class Supp extends Fragment implements BillingProcessor.IBillingHandler {
 
     }
 
+    private void donateInitiate(int i) {
+        BillingFlowParams billingFlowParams = BillingFlowParams.newBuilder()
+            .setSkuDetails(skuList.get(i))
+            .build();
+        int responseCode = billingClient.launchBillingFlow(getActivity(), billingFlowParams).getResponseCode();
 
-    @Override
-    public void onProductPurchased(@NonNull String productId, @Nullable TransactionDetails details) {
-        Toast.makeText(getActivity(), "Thanks For Purchasing :)!!",
-                Toast.LENGTH_LONG).show();
-        pToken();
-
-    }
-
-    public static String ptok = "";
-
-    public void pToken()
-    {
-        @Nullable  TransactionDetails td = bp.getSubscriptionTransactionDetails("xen_s_rank");
-        if (td != null && !TextUtils.isEmpty(td.purchaseInfo.purchaseData.purchaseToken)) {
-            ptok = td.purchaseInfo.purchaseData.purchaseToken;
-        }
-
-    }
-
-    @Override
-    public void onPurchaseHistoryRestored() {
-        for(String sku : bp.listOwnedSubscriptions()) {
-            Log.d("PURCHASE", "Owned Subscription: " + sku);
-            Toast.makeText(getActivity(), "Owned Subscription: " + sku,
-                    Toast.LENGTH_LONG).show();
-        }
-        pToken();
-    }
-
-    @Override
-    public void onBillingError(int errorCode, @Nullable Throwable error) {
-
-    }
-
-    @Override
-    public void onBillingInitialized() {
-        pToken();
     }
 }

@@ -51,8 +51,8 @@ public class Tools extends Fragment {
                             Toast.LENGTH_LONG).show();
                     return;
                 }
-                if(Supp.ptok=="") {
-                    Toast.makeText(getContext(), "Need To Buy This Feature!!!!",
+                if(true) {
+                    Toast.makeText(getContext(), "Feature not working!!",
                             Toast.LENGTH_LONG).show();
                     return;
                 }
