@@ -1,8 +1,8 @@
 package cf.androefi.xenone;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
+import com.google.android.material.tabs.TabLayout;
+import androidx.viewpager.widget.ViewPager;
+import androidx.appcompat.app.AppCompatActivity;
 public class MainActivity extends AppCompatActivity {
     private TabAdapter adapter;
     private TabLayout tabLayout;
@@ -20,8 +20,8 @@ public class MainActivity extends AppCompatActivity {
         adapter.addFragment(new Supp(), "Support!");
         adapter.addFragment(new gif(), "Gif");
         adapter.addFragment(new bcubes(), "Bcubes!");
-        adapter.addFragment(new VPN(), "VPN And Data");
-        adapter.addFragment(new Tools(), "Tools!");
+        //adapter.addFragment(new VPN(), "VPN And Data");
+        adapter.addFragment(new Tools(), "Misc!");
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
 

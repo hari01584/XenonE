@@ -1,14 +1,12 @@
 package cf.androefi.xenone;
 
 
-import android.content.ClipData;
-import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,14 +17,15 @@ import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 
 import cf.androefi.xenone.util.FileUtils;
-import cf.androefi.xenone.util.HttpUtils;
 import cf.androefi.xenone.util.LogUtils;
 import cf.androefi.xenone.vservice.DnsChange;
 
-import static android.support.constraint.Constraints.TAG;
 import static cf.androefi.xenone.VhostsActivity.PREFS_NAME;
 
 public class VPN extends Fragment {
+
+    private static final String TAG = "v/VPN";
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_vpn, container, false);

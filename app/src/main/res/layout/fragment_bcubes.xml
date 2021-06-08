@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -17,18 +17,60 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <com.skydoves.powerspinner.PowerSpinnerView
+      android:id="@+id/powerSpinnerView"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:padding="10dp"
+      android:gravity="center"
+      android:hint="Choose a game"
+      android:textColor="@color/brown"
+      android:textColorHint="@color/brown"
+      android:textSize="16sp"
+      app:layout_constraintTop_toBottomOf="@+id/textView3"
+      app:spinner_arrow_gravity="end"
+      app:spinner_arrow_padding="8dp"
+      app:spinner_divider_color="@color/red"
+      app:spinner_divider_show="true"
+      app:spinner_divider_size="0.4dp"
+      app:spinner_item_array="@array/vals_minigames"
+      app:spinner_popup_animation="dropdown"
+      app:spinner_popup_background="@color/light_coral"
+      app:spinner_popup_elevation="14dp" />
 
     <TextView
-        android:id="@+id/hel7"
-        android:layout_width="match_parent"
-        android:layout_height="400dp"
-        android:layout_marginTop="30dp"
-        android:fontFamily="cursive"
-        android:text="This Tool Allows You To Get 4 Cubes A Day Without Watching Ads!! Consider Donating Me If This Works And You Use IT :)"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bcw" />
+      android:id="@+id/textView3"
+      android:textStyle="bold"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="20dp"
+      android:padding="3dp"
+      android:fontFamily="serif-monospace"
+      android:text="Rickroll Items! (Minigame Item Draw)"
+      android:textSize="16sp"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/bcw" />
 
 
-</android.support.constraint.ConstraintLayout>
+    <TextView
+      android:id="@+id/hel7"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:fontFamily="cursive"
+      android:text="This Tool Allows You To Get 4 Cubes A Day Without Watching Ads!! Consider Donating Me If This Works And You Use IT :)"
+      android:textSize="20sp"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent" />
+    <Button
+      android:id="@+id/button2"
+      android:layout_width="0dp"
+      android:layout_height="54dp"
+      android:layout_marginTop="4dp"
+      android:text="Get Item!"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/powerSpinnerView" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

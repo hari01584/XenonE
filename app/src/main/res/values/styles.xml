@@ -7,7 +7,12 @@
         <item name="colorAccent">@color/dark_orange</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+
+        <item name="colorButtonNormal">@color/light_goldenrod_yellow</item>
+        <item name="colorControlHighlight">@color/light_blue</item>
     </style>
+
+
     <style name="MyToolbarTheme"
         parent="@style/ThemeOverlay.AppCompat.Dark">
         <item name="colorControlNormal">@color/white</item>

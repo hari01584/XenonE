@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -18,82 +18,43 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <View
-        android:id="@+id/h1"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_marginTop="20dp"
-        android:background="#c0c0c0"
-        app:layout_constraintTop_toBottomOf="@+id/sexec" />
-
-    <TextView
-        android:id="@+id/inf1"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginEnd="5dp"
-        android:text="Free Account Giveaway!!"
-        android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.AppCompat.Title"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/h1" />
-
-
-    <EditText
-        android:id="@+id/email"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Enter Your Email!"
-        android:inputType="textEmailAddress"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inf1" />
-
     <Button
-        android:id="@+id/freac"
-        android:layout_width="match_parent"
-        android:layout_height="54dp"
-        android:layout_marginTop="10dp"
-        android:text="Claim Your Account!!"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/email" />
+      android:id="@+id/addmef"
+      android:layout_width="match_parent"
+      android:layout_height="54dp"
+      android:layout_marginTop="8dp"
+      android:text="Add me(Agent_Orange) in friends!"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.0"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/sexec" />
+    <View
+      android:id="@+id/h1"
+      android:layout_width="match_parent"
+      android:layout_height="2dp"
+      android:layout_marginBottom="8dp"
+      android:background="#c0c0c0"
+      app:layout_constraintBottom_toTopOf="@+id/h2" />
 
-    <TextView
-        android:id="@+id/inf3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:fontFamily="cursive"
-        android:text="In Order To Get A Free Account, You Must Enter Your Email!!"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.469"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/freac" />
 
     <View
-        android:id="@+id/h2"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_marginTop="10dp"
-        android:background="#c0c0c0"
-        app:layout_constraintTop_toBottomOf="@+id/inf3" />
+      android:id="@+id/h2"
+      android:layout_width="match_parent"
+      android:layout_height="2dp"
+      android:background="#c0c0c0"
+      app:layout_constraintBottom_toTopOf="@+id/hel11" />
 
     <TextView
-        android:id="@+id/hel11"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_marginTop="20dp"
-        android:fontFamily="cursive"
-        android:text="More Tools Will BE Added Later :)"
-        android:textSize="40sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.469"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/h2" />
+      android:id="@+id/hel11"
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_marginBottom="20dp"
+      android:fontFamily="cursive"
+      android:text="More Tools Will BE Added Later :)"
+      android:textSize="40sp"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.469"
+      app:layout_constraintStart_toStartOf="parent" />
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

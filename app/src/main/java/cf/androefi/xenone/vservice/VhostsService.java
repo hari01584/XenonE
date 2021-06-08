@@ -28,7 +28,7 @@ import android.net.Uri;
 import android.net.VpnService;
 import android.os.Build;
 import android.os.ParcelFileDescriptor;
-import android.support.v4.content.LocalBroadcastManager;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import cf.androefi.xenone.NetworkReceiver;
 import cf.androefi.xenone.R;
 import cf.androefi.xenone.VhostsActivity;

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string-array name="keys_minigames">
+    <item>g1046</item>
+    <item>g1018</item>
+    <item>g1014</item>
+    <item>g1042</item>
+  </string-array>
+
+  <string-array name="vals_minigames">
+    <item>Bedwars</item>
+    <item>Eggwars</item>
+    <item>Survival</item>
+    <item>Build and Shoot</item>
+  </string-array>
+</resources>

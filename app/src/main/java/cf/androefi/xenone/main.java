@@ -4,8 +4,8 @@ package cf.androefi.xenone;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,11 +41,12 @@ public class main extends Fragment {
         final EditText ud=(EditText)getActivity().findViewById(R.id.editText);
         final EditText ps=(EditText)getActivity().findViewById(R.id.editText4);
         Util.init(getActivity(),ud,ps);
-        try {
-            Util.check_update(getContext());
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
+        Util.makeAnnouncements(getContext());
+//        try {
+//            Util.check_update(getContext());
+//        } catch (PackageManager.NameNotFoundException e) {
+//            e.printStackTrace();
+//        }
         Button sb = getActivity().findViewById(R.id.button);
         sb.setOnClickListener(new View.OnClickListener() {
             @Override

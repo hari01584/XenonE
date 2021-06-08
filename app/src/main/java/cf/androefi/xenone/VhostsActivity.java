@@ -24,25 +24,17 @@ import android.app.PendingIntent;
 import android.content.*;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.content.LocalBroadcastManager;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import android.text.method.ScrollingMovementMethod;
-import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.koushikdutta.async.future.FutureCallback;
-import com.koushikdutta.ion.Ion;
 import com.suke.widget.SwitchButton;
 
-import cf.androefi.xenone.util.FileUtils;
-import cf.androefi.xenone.util.HttpUtils;
 import cf.androefi.xenone.util.LogUtils;
 import cf.androefi.xenone.vservice.VhostsService;
-
-import java.lang.reflect.Field;
 
 public class VhostsActivity extends AppCompatActivity {
 

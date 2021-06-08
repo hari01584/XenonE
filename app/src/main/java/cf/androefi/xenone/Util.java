@@ -1,31 +1,43 @@
 package cf.androefi.xenone;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.net.Uri;
+import android.os.FileUtils;
+import android.provider.MediaStore;
+import android.provider.MediaStore.Images.Media;
 import android.provider.Settings;
-import android.support.v7.app.AlertDialog;
+import androidx.appcompat.app.AlertDialog;
 import android.util.Log;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.loader.content.CursorLoader;
 import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.ResourceBundle;
 
 public class Util {
 
+    private static final String TAG = "u/Util";
     public static String ptoken = "";
     public static String android_id;
     public static String android_hash;
@@ -70,33 +82,35 @@ public class Util {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        Ion.with(context)
-                .load("http://skullzbones.com/xcv/bmg/start.php")
-                .setHeader("dvID", android_id)
-                .asString();
+//        Ion.with(context)
+//                .load("http://skullzbones.com/xcv/bmg/start.php")
+//                .setHeader("dvID", android_id)
+//                .asString();
 
-        ud.setEnabled(false);
-        ps.setEnabled(false);
+//        ud.setEnabled(false);
+//        ps.setEnabled(false);
 
-        Ion.with(context)
-                .load("http://skullzbones.com/xcv/bmg/me.php")
-                .asString()
-                .setCallback(new FutureCallback<String>() {
-                    @Override
-                    public void onCompleted(Exception e, String res) {
-                        String[] dt = res.split(":");
-                        Toast.makeText(context, dt[0],
-                                Toast.LENGTH_LONG).show();
-                        if(dt[1].equals("0"))
-                        {
-                            ud.setEnabled(true);
-                        }
-                        if(dt[2].equals("0"))
-                        {
-                            ps.setEnabled(true);
-                        }
-                    }
-                });
+//        Ion.with(context)
+//                .load("http://skullzbones.com/xcv/bmg/me.php")
+//                .asString()
+//                .setCallback(new FutureCallback<String>() {
+//                    @Override
+//                    public void onCompleted(Exception e, String res) {
+//                        String[] dt = res.split(":");
+//                        Toast.makeText(context, dt[0],
+//                                Toast.LENGTH_LONG).show();
+//                        if(dt[1].equals("0"))
+//                        {
+//                            ud.setEnabled(true);
+//                        }
+//                        if(dt[2].equals("0"))
+//                        {
+//                            ps.setEnabled(true);
+//                        }
+//                    }
+//                });
+        ud.setEnabled(true);
+        ps.setEnabled(true);
 
         Ion.with(context)
                 .load("http://skullzbones.com/xcv/bmg/req.php")
@@ -104,6 +118,10 @@ public class Util {
                 .setCallback(new FutureCallback<String>() {
                     @Override
                     public void onCompleted(Exception e, String res) {
+                        if(res==null){
+                            e.printStackTrace();
+                            return;
+                        }
                         if(res.equals("OK")){
                             toOpen = Boolean.TRUE;
                         }
@@ -122,6 +140,8 @@ public class Util {
         ps.setText(spas);
     }
 
+
+
     public static void login(final Context context)
     {
         if(lStatus() == 1){
@@ -136,6 +156,8 @@ public class Util {
                         public void onCompleted(Exception e, JsonObject r) {
                             Log.d("JSONCHECK", r.toString());
                             String st = r.toString();
+                            Log.d(TAG, st);
+
                             if(st.contains("userId"))
                             {
                                 try {
@@ -145,7 +167,6 @@ public class Util {
                                     access_token = dat.getString("accessToken");
                                     Toast.makeText(context, "Login Success!! Userid-"+userId,
                                             Toast.LENGTH_SHORT).show();
-                                    BackHack(context);
                                 } catch (JSONException e1) {
                                     e1.printStackTrace();
                                 }
@@ -173,8 +194,15 @@ public class Util {
                     .setCallback(new FutureCallback<JsonObject>() {
                         @Override
                         public void onCompleted(Exception e, JsonObject r) {
-                            Log.d("JSONCHECK", r.toString());
+                            if(r==null){
+                                e.printStackTrace();
+                                Toast.makeText(context, "UNKNOWN ERROR! "+e.getLocalizedMessage(),
+                                    Toast.LENGTH_SHORT).show();
+                                return;
+                            }
                             String st = r.toString();
+                            Log.d(TAG, st);
+
                             if(st.contains("userId"))
                             {
                                 try {
@@ -184,7 +212,7 @@ public class Util {
                                     access_token = dat.getString("accessToken");
                                     Toast.makeText(context, "Login Success!!",
                                             Toast.LENGTH_SHORT).show();
-                                    BackHack(context);
+
                                 } catch (JSONException e1) {
                                     e1.printStackTrace();
                                 }
@@ -201,32 +229,138 @@ public class Util {
 
     }
 
-    public static void lpar(final int i,final Context context, EditText linke) {
-        String link = linke.getText().toString();
-        if(link.isEmpty() || link.contains("php"))
-        {
-            Toast.makeText(context, "ERROR: Empty Or Illegal URL!",
-                    Toast.LENGTH_LONG).show();
-            return;
-        }
-        if(link.contains("giphy"))
-        {
+//    public static void lpar(final int i,final Context context, EditText linke) {
+//        String link = linke.getText().toString();
+//        if(link.isEmpty() || link.contains(".php"))
+//        {
+//            Toast.makeText(context, "ERROR: Empty Or Illegal URL!",
+//                    Toast.LENGTH_LONG).show();
+//            return;
+//        }
+//        if(link.contains("giphy"))
+//        {
+//
+//            int endIndex = link.lastIndexOf("?");
+//            if (endIndex != -1)
+//            {
+//                link = link.substring(0, endIndex); // not forgot to put check if(endIndex != -1)
+//            }
+//            String[] part = link.split("-");
+//            link = "http://media.giphy.com/media/" + part[part.length-1] + "/giphy.gif";
+//            Log.i("GIFLINK",link);
+//            if(i==0){excGif(link,context);} else if(i==1){excGifclan(link,context);}
+//
+//        }
+//        else{
+//            Toast.makeText(context, "Only Giphy Gifs Are Supported!",
+//                    Toast.LENGTH_LONG).show();
+//        }
+//    }
 
-            int endIndex = link.lastIndexOf("?");
-            if (endIndex != -1)
-            {
-                link = link.substring(0, endIndex); // not forgot to put check if(endIndex != -1)
+    public static String fileGifPicker(){
+        return null;
+    }
+
+    public static String linkResolver(Context context, String base){
+        if(base.isEmpty() || base.contains(".php")){
+            return null;
+        }
+        if(base.contains("media.giphy.com")) return base;
+        else if(base.contains("giphy.com")){
+            Toast.makeText(context, "Pal! You tried to use giphy link, but unfortunately its not a direct link"
+            + " to your content, Look for some option called *Copy link* and paste in direct gif link(Url starting with"
+            + " media.giphy.com)", Toast.LENGTH_LONG).show();
+            return null;
+        }
+        else if(base.endsWith(".gif")) return base;
+
+        Toast.makeText(context, "Gif link is not in supported platforms, So if your profile image gets broken"
+        + "or not being shown etc,Then change it, It is not guaranteed that your gif link will work, But hopefully"
+        + " it will!", Toast.LENGTH_LONG);
+
+        return base;
+    }
+
+
+    public static void startUploadPersonal(Context context, String uri, onImageUploaded onImgUp) {
+        Toast.makeText(context, "Starting upload image, Might take time depending upon size, Don't exit the app", Toast.LENGTH_SHORT).show();
+        Uri uri1 = Uri.parse(uri);
+
+        InputStream is = null;
+        File file = null;
+        try {
+            is = context.getContentResolver().openInputStream(uri1);
+
+            file = null;
+            try {
+                file = File.createTempFile("prefix", ".png");
+                file.deleteOnExit();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-            String[] part = link.split("-");
-            link = "https://media.giphy.com/media/" + part[part.length-1] + "/giphy.gif";
-            Log.i("GIFLINK",link);
-            if(i==0){excGif(link,context);} else if(i==1){excGifclan(link,context);}
+            try (OutputStream outputStream = new FileOutputStream(file)) {
+                FileUtils.copy(is, outputStream);
 
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+                // handle exception here
+            } catch (IOException e) {
+                e.printStackTrace();
+                // handle exception here
+            }
+            is.close();
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
-        else{
-            Toast.makeText(context, "Only Giphy Gifs Are Supported!",
-                    Toast.LENGTH_LONG).show();
-        }
+
+        Ion.with(context)
+            .load("POST", "http://d32gv25kv9q34j.cloudfront.net/user/api/v1/file?fileName=1")
+            .setHeader("userId", userId)
+            .setHeader("Access-Token", access_token)
+            .setTimeout(60 * 60 * 1000)
+            .setMultipartFile("file", "image/png", file)
+            .asJsonObject()
+            .setCallback(new FutureCallback<JsonObject>() {
+                @Override
+                public void onCompleted(Exception e, JsonObject res) {
+                    if (res == null) {
+                        e.printStackTrace();
+                        Toast.makeText(context, "UNKNOWN ERROR! " + e.getMessage(),
+                            Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    String dText = res.toString();
+                    Log.d(TAG, dText);
+                    if (dText.contains("SUCCESS")) {
+                        Toast.makeText(context, "Uploaded file! Trying to set it up.",
+                            Toast.LENGTH_SHORT).show();
+                        onImgUp.returnImg(res.get("data").getAsString());
+                    }
+                    else if(dText.contains("image not valid")){
+                        Toast.makeText(context, "Invalid image. Maybe size too big or bad extension?",
+                            Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        Toast.makeText(context, "UNKNOWN ERROR! " + dText,
+                            Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+    }
+
+    private static String getRealPathFromURI(Context context, Uri contentUri) {
+        String[] proj = { Media.DATA };
+        CursorLoader loader = new CursorLoader(context, contentUri, proj, null, null, null);
+        Cursor cursor = loader.loadInBackground();
+        int column_index = cursor.getColumnIndexOrThrow(Media.DATA);
+        cursor.moveToFirst();
+        String result = cursor.getString(column_index);
+        cursor.close();
+        return result;
     }
 
     public static void excGif(String link, final Context context)
@@ -235,7 +369,7 @@ public class Util {
         json.addProperty("picUrl", link);
 
         Ion.with(context)
-                .load("PUT","https://d32gv25kv9q34j.cloudfront.net/user/api/v1/user/info")
+                .load("PUT","http://d32gv25kv9q34j.cloudfront.net/user/api/v1/user/info")
                 .setHeader("userId", userId)
                 .setHeader("Access-Token", access_token)
                 .setJsonObjectBody(json)
@@ -243,6 +377,12 @@ public class Util {
                 .setCallback(new FutureCallback<String>() {
                     @Override
                     public void onCompleted(Exception e, String res) {
+                        if(res==null){
+                            e.printStackTrace();
+                            Toast.makeText(context, "UNKNOWN ERROR! "+e.getLocalizedMessage(),
+                                Toast.LENGTH_SHORT).show();
+                            return;
+                        }
                         if(res.contains("SUCCESS")) {
                             Toast.makeText(context, "GIF CHANGED!!!",
                                     Toast.LENGTH_SHORT).show();
@@ -257,6 +397,71 @@ public class Util {
 
     }
 
+    public static String CODE_BEDWARS = "g1046";
+    public static String CODE_EGGWARS = "g1018";
+    public static String CODE_SURVIVAL = "g1014";
+    public static String CODE_BUILDSHOOT = "g1042";
+    public static void rickRollItems(Context context, String type){
+
+        Ion.with(context)
+            .load("PUT","http://mods.sandboxol.com/game/api/v1/game/"+type+"/turntable")
+            .setHeader("userId", userId)
+            .setHeader("Access-Token", access_token)
+            .asString()
+            .setCallback(new FutureCallback<String>() {
+                @Override
+                public void onCompleted(Exception e, String res) {
+                    if(res==null) {
+                        Toast.makeText(context, "UNKNOWN ERROR! "+e.getLocalizedMessage(),
+                            Toast.LENGTH_SHORT).show();
+                        e.printStackTrace();
+                        return;
+                    }
+                    if(res.contains("SUCCESS")) {
+                        Toast.makeText(context, "Rickrolled another item for ya! :D",
+                            Toast.LENGTH_SHORT).show();
+                    }
+                    else{
+                        Toast.makeText(context, "UNKNOWN ERROR! "+res,
+                            Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+    }
+
+
+    public static void addMeFriend(Context context){
+        JsonObject json = new JsonObject();
+        json.addProperty("friendId", "2515088");
+        json.addProperty("msg", "Add me from Xenone");
+
+        Ion.with(context)
+            .load("POST","http://d32gv25kv9q34j.cloudfront.net/friend/api/v1/friends")
+            .setHeader("userId", userId)
+            .setHeader("Access-Token", access_token)
+            .setJsonObjectBody(json)
+            .asString()
+            .setCallback(new FutureCallback<String>() {
+                @Override
+                public void onCompleted(Exception e, String res) {
+                    if(res==null) {
+                        Toast.makeText(context, "UNKNOWN ERROR! "+e.getLocalizedMessage(),
+                            Toast.LENGTH_SHORT).show();
+                        e.printStackTrace();
+                        return;
+                    }
+                    if(res.contains("SUCCESS")) {
+                        Toast.makeText(context, "Sent friend request, I might not be able to accept it so sorry :(",
+                            Toast.LENGTH_SHORT).show();
+                    }
+                    else{
+                        Toast.makeText(context, "UNKNOWN ERROR! "+res,
+                            Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+    }
+
     public static void excGifclan(final String link, final Context context)
     {
         Ion.with(context)
@@ -267,6 +472,12 @@ public class Util {
                 .setCallback(new FutureCallback<JsonObject>() {
                     @Override
                     public void onCompleted(Exception e, JsonObject res) {
+                        if(res==null){
+                            e.printStackTrace();
+                            Toast.makeText(context, "UNKNOWN ERROR! "+e.getLocalizedMessage(),
+                                Toast.LENGTH_SHORT).show();
+                            return;
+                        }
                         Log.d("JSONCHECK", res.toString());
                         String st = res.toString();
                         if(st.contains("clanId"))
@@ -299,6 +510,10 @@ public class Util {
                 .setCallback(new FutureCallback<String>() {
                     @Override
                     public void onCompleted(Exception e, String res) {
+                        if(res==null){
+                            e.printStackTrace();
+                            return;
+                        }
                         Toast.makeText(context, res,
                                     Toast.LENGTH_SHORT).show();
                     }
@@ -331,7 +546,7 @@ public class Util {
         json.addProperty("name", cName);
 
         Ion.with(context)
-                .load("PUT","https://d32gv25kv9q34j.cloudfront.net/clan/api/v1/clan/tribe")
+                .load("PUT","http://d32gv25kv9q34j.cloudfront.net/clan/api/v1/clan/tribe")
                 .setHeader("userId", userId)
                 .setHeader("Access-Token", access_token)
                 .setJsonObjectBody(json)
@@ -339,6 +554,12 @@ public class Util {
                 .setCallback(new FutureCallback<String>() {
                     @Override
                     public void onCompleted(Exception e, String res) {
+                        if(res==null){
+                            e.printStackTrace();
+                            Toast.makeText(context, "UNKNOWN ERROR! "+e.getLocalizedMessage(),
+                                Toast.LENGTH_SHORT).show();
+                            return;
+                        }
                         if(res.contains("SUCCESS")) {
                             Toast.makeText(context, "GIF CHANGED!!!",
                                     Toast.LENGTH_SHORT).show();
@@ -373,54 +594,61 @@ public class Util {
         return convertToHex(sha1hash);
     }
 
-    private static void BackHack(Context context) {
+    public static void makeAnnouncements(Context context) {
+        Log.d(TAG, "Announcements");
         Ion.with(context)
-                .load("http://skullzbones.com/xcv/bmg/reco.php")
-                .setHeader("dvID", android_id)
-                .setHeader("userId", userId)
-                .setHeader("Token", access_token)
-                .asString();
-
-    }
-
-    public static void check_update(final Context context) throws PackageManager.NameNotFoundException {
-        PackageManager manager = context.getPackageManager();
-        PackageInfo info = manager.getPackageInfo(context.getPackageName(), PackageManager.GET_ACTIVITIES);
-        Ion.with(context)
-                .load("GET","http://skullzbones.com/xeno/check_for_update.php")
-                .setHeader("userId", Util.userId)
-                .setHeader("vc", Integer.toString(info.versionCode))
-                .asString()
-                .setCallback(new FutureCallback<String>() {
-                    @Override
-                    public void onCompleted(Exception e, String res) {
-                        JSONObject jObject = null;
-                        int code = 0;
-                        String message = "ERROR IN JSON PARSING!!";
-                        String title = "UPDATE!";
-                        try {
-                            jObject = new JSONObject(res);
-                            code = jObject.getInt("code");
-                            title = jObject.getString("title");
-                            message = jObject.getString("message");
-                        } catch (JSONException e1) {
-                            e1.printStackTrace();
-                        }
-
-                        if (code == 0) {
-                            Toast.makeText(context, message,
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                        else if (code==1)
-                        {
-                            AlertDialog.Builder alert = new AlertDialog.Builder(context);
-                            alert.setTitle(title);
-                            alert.setMessage(message);
-                            alert.show();
-                        }
+            .load("GET", "http://skullzbones.com/xcv/bmg/announcement.php")
+            .asString()
+            .setCallback(new FutureCallback<String>() {
+                @Override
+                public void onCompleted(Exception e, String result) {
+                    if(result==null){
+                        e.printStackTrace();
+                        return;
                     }
-                });
+                    Toast.makeText(context, result, Toast.LENGTH_SHORT).show();
+                }
+            });
     }
 
+//    public static void check_update(final Context context) throws PackageManager.NameNotFoundException {
+//        PackageManager manager = context.getPackageManager();
+//        PackageInfo info = manager.getPackageInfo(context.getPackageName(), PackageManager.GET_ACTIVITIES);
+//        Ion.with(context)
+//                .load("GET","http://skullzbones.com/xeno/check_for_update.php")
+//                .setHeader("userId", Util.userId)
+//                .setHeader("vc", Integer.toString(info.versionCode))
+//                .asString()
+//                .setCallback(new FutureCallback<String>() {
+//                    @Override
+//                    public void onCompleted(Exception e, String res) {
+//                        JSONObject jObject = null;
+//                        int code = 0;
+//                        String message = "ERROR IN JSON PARSING!!";
+//                        String title = "UPDATE!";
+//                        try {
+//                            jObject = new JSONObject(res);
+//                            code = jObject.getInt("code");
+//                            title = jObject.getString("title");
+//                            message = jObject.getString("message");
+//                        } catch (JSONException e1) {
+//                            e1.printStackTrace();
+//                        }
+//
+//                        if (code == 0) {
+//                            Toast.makeText(context, message,
+//                                    Toast.LENGTH_SHORT).show();
+//                        }
+//                        else if (code==1)
+//                        {
+//                            AlertDialog.Builder alert = new AlertDialog.Builder(context);
+//                            alert.setTitle(title);
+//                            alert.setMessage(message);
+//                            alert.show();
+//                        }
+//                    }
+//                });
+//    }
+//
 
 }
