@@ -156,7 +156,11 @@ public class Util {
                     .setCallback(new FutureCallback<JsonObject>() {
                         @Override
                         public void onCompleted(Exception e, JsonObject r) {
-                            Log.d("JSONCHECK", r.toString());
+                            if(r==null){
+                                Toast.makeText(context, "Error Encountered! Network error?", Toast.LENGTH_LONG);
+                                e.printStackTrace();
+                                return;
+                            }
                             String st = r.toString();
                             Log.d(TAG, st);
 
@@ -301,7 +305,7 @@ public class Util {
                 e.printStackTrace();
             }
             try (OutputStream outputStream = new FileOutputStream(file)) {
-                FileUtils.copy(is, outputStream);
+                cf.androefi.xenone.util.FileUtils.copyStream(is, outputStream);
 
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
@@ -345,6 +349,11 @@ public class Util {
             .setCallback(new FutureCallback<JsonObject>() {
                 @Override
                 public void onCompleted(Exception e, JsonObject res) {
+                    if(res==null){
+                        Toast.makeText(context, "Error Encountered! Network error?", Toast.LENGTH_LONG);
+                        e.printStackTrace();
+                        return;
+                    }
                     mProgressDialog.dismiss();
                     if (res == null) {
                         e.printStackTrace();
