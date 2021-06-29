@@ -25,9 +25,7 @@ No One Right Now
 
 * **Agent_Orange** - *Initial work* - [XenonE](https://github.com/XenonE)
 
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
-
-## Open Source Licenses
+See also the list of [contributors](https://github.com/hari01584/project/XenonE) who participated in this project.
 
 
 ## License
