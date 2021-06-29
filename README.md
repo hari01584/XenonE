@@ -28,12 +28,7 @@ No One Right Now
 See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
 
 ## Open Source Licenses
-<ul>
-    <li>LocalVPN: <a href="https://github.com/hexene/LocalVPN/blob/master/README.md">APL 2.0</a></li>
-</ul>
-<ul>
-    <li>Virtual-Hosts: <a href="https://github.com/x-falcon/Virtual-Hosts/blob/master/README.md">GNU 3.0</a></li>
-</ul>
+
 
 ## License
 
