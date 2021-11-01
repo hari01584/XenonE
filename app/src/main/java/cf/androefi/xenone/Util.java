@@ -3,24 +3,17 @@ package cf.androefi.xenone;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.FileUtils;
-import android.provider.MediaStore;
 import android.provider.MediaStore.Images.Media;
 import android.provider.Settings;
-import androidx.appcompat.app.AlertDialog;
 import android.util.Log;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import androidx.loader.content.CursorLoader;
 import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
-
 import com.koushikdutta.ion.ProgressCallback;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -28,14 +21,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.URI;
-import java.net.URISyntaxException;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class Util {
 
@@ -46,8 +36,11 @@ public class Util {
     public static String userId = "";
     public static String userPass = "";
     public static String access_token = "";
+    public static String http_dn = "";
+    public static String https_dn = "";
     public static Boolean toOpen;
     static SharedPreferences save;
+    private static String region;
 
     public static int lStatus() {
         if (userPass == "" || userPass.isEmpty()) {
@@ -79,62 +72,31 @@ public class Util {
                 Settings.Secure.ANDROID_ID);
         try {
             android_hash = SHA1(android_id);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
+        } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-//        Ion.with(context)
-//                .load("http://skullzbones.com/xcv/bmg/start.php")
-//                .setHeader("dvID", android_id)
-//                .asString();
-
-//        ud.setEnabled(false);
-//        ps.setEnabled(false);
-
-//        Ion.with(context)
-//                .load("http://skullzbones.com/xcv/bmg/me.php")
-//                .asString()
-//                .setCallback(new FutureCallback<String>() {
-//                    @Override
-//                    public void onCompleted(Exception e, String res) {
-//                        String[] dt = res.split(":");
-//                        Toast.makeText(context, dt[0],
-//                                Toast.LENGTH_LONG).show();
-//                        if(dt[1].equals("0"))
-//                        {
-//                            ud.setEnabled(true);
-//                        }
-//                        if(dt[2].equals("0"))
-//                        {
-//                            ps.setEnabled(true);
-//                        }
-//                    }
-//                });
         ud.setEnabled(true);
         ps.setEnabled(true);
 
-        Ion.with(context)
-                .load("http://skullzbones.com/xcv/bmg/req.php")
-                .asString()
-                .setCallback(new FutureCallback<String>() {
-                    @Override
-                    public void onCompleted(Exception e, String res) {
-                        if(res==null){
-                            e.printStackTrace();
-                            return;
-                        }
-                        if(res.equals("OK")){
-                            toOpen = Boolean.TRUE;
-                        }
-                        else{
-                            Toast.makeText(context, res,
-                                    Toast.LENGTH_LONG).show();
-                            toOpen = Boolean.FALSE;
-                        }
-                    }
-                });
+//        Ion.with(context)
+//                .load("http://skullzbones.com/xcv/bmg/req.php")
+//                .asString()
+//                .setCallback((e, res) -> {
+//                    if(res==null){
+//                        e.printStackTrace();
+//                        return;
+//                    }
+//                    if(res.equals("OK")){
+//                        toOpen = Boolean.TRUE;
+//                    }
+//                    else{
+//                        Toast.makeText(context, res,
+//                                Toast.LENGTH_LONG).show();
+//                        toOpen = Boolean.FALSE;
+//                    }
+//                });
 
+        toOpen = Boolean.TRUE;
 
         String suid = save.getString("user","");
         String spas = save.getString("pass","");
@@ -148,7 +110,7 @@ public class Util {
     {
         if(lStatus() == 1){
             Ion.with(context)
-                    .load("http://mods.sandboxol.com/user/api/v1/app/auth-token")
+                    .load(http_dn + "/user/api/v1/app/auth-token")
                     .setHeader("bmg-user-id", userId)
                     .setHeader("bmg-device-id", android_id)
                     .setHeader("bmg-sign", android_hash)
@@ -171,6 +133,7 @@ public class Util {
                                     JSONObject dat  = rd.getJSONObject("data");
                                     userId = dat.getString("userId");
                                     access_token = dat.getString("accessToken");
+
                                     Toast.makeText(context, "Login Success!! Userid-"+userId,
                                             Toast.LENGTH_SHORT).show();
                                 } catch (JSONException e1) {
@@ -188,13 +151,19 @@ public class Util {
         }
         else if ( lStatus()==2){
             JsonObject json = new JsonObject();
-            json.addProperty("appType", "web");
-            json.addProperty("uid", userId);
-            json.addProperty("platform", "");
+            json.addProperty("appType", "android");
+            json.addProperty("hasPassword", "True");
+            json.addProperty("needReward", 0);
+            json.addProperty("packageName", "com.sandboxol.blockymods");
             json.addProperty("password", userPass);
+            json.addProperty("uid", userId);
+
 
             Ion.with(context)
-                    .load("http://d32gv25kv9q34j.cloudfront.net/user/api/v1/login")
+                    .load("http://route.sandboxol.com" + "/user/api/v1/app/login")
+                    .setHeader("bmg-user-id", userId)
+                    .setHeader("bmg-device-id", android_id)
+                    .setHeader("bmg-sign", android_hash)
                     .setJsonObjectBody(json)
                     .asJsonObject()
                     .setCallback(new FutureCallback<JsonObject>() {
@@ -216,7 +185,10 @@ public class Util {
                                     JSONObject dat  = rd.getJSONObject("data");
                                     userId = dat.getString("userId");
                                     access_token = dat.getString("accessToken");
-                                    Toast.makeText(context, "Login Success!!",
+                                    http_dn = dat.getString("httpDN");
+                                    https_dn = dat.getString("httpsDN");
+                                    region = dat.getString("region");
+                                    Toast.makeText(context, "Login Success!! You might get login from another device in blockman go, but don't worry about it!",
                                             Toast.LENGTH_SHORT).show();
 
                                 } catch (JSONException e1) {
@@ -332,7 +304,7 @@ public class Util {
         mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
         mProgressDialog.show();
         Ion.with(context)
-            .load("POST", "http://d32gv25kv9q34j.cloudfront.net/user/api/v1/file?fileName=1")
+            .load("POST", http_dn + "/user/api/v1/file?fileName=1")
             .uploadProgressHandler(new ProgressCallback() {
                 @Override
                 public void onProgress(long uploaded, long total) {
@@ -350,7 +322,7 @@ public class Util {
                 @Override
                 public void onCompleted(Exception e, JsonObject res) {
                     if(res==null){
-                        Toast.makeText(context, "Error Encountered! Network error?", Toast.LENGTH_LONG);
+                        Toast.makeText(context, "Error Encountered! Network error?", Toast.LENGTH_LONG).show();
                         e.printStackTrace();
                         return;
                     }
@@ -397,7 +369,7 @@ public class Util {
         json.addProperty("picUrl", link);
 
         Ion.with(context)
-                .load("PUT","http://d32gv25kv9q34j.cloudfront.net/user/api/v1/user/info")
+                .load("PUT",http_dn + "/user/api/v1/user/info")
                 .setHeader("userId", userId)
                 .setHeader("Access-Token", access_token)
                 .setJsonObjectBody(json)
@@ -432,7 +404,7 @@ public class Util {
     public static void rickRollItems(Context context, String type){
 
         Ion.with(context)
-            .load("PUT","http://mods.sandboxol.com/game/api/v1/game/"+type+"/turntable")
+            .load("PUT",http_dn + "/game/api/v1/game/"+type+"/turntable")
             .setHeader("userId", userId)
             .setHeader("Access-Token", access_token)
             .asString()
@@ -459,12 +431,18 @@ public class Util {
 
 
     public static void addMeFriend(Context context){
+        if(true){
+            Toast.makeText(context, "Feature disabled for now.. ",
+                Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         JsonObject json = new JsonObject();
         json.addProperty("friendId", "2515088");
         json.addProperty("msg", "Add me from Xenone");
 
         Ion.with(context)
-            .load("POST","http://d32gv25kv9q34j.cloudfront.net/friend/api/v1/friends")
+            .load("POST",http_dn + "/friend/api/v1/friends")
             .setHeader("userId", userId)
             .setHeader("Access-Token", access_token)
             .setJsonObjectBody(json)
@@ -493,7 +471,7 @@ public class Util {
     public static void excGifclan(final String link, final Context context)
     {
         Ion.with(context)
-                .load("GET","http://mods.sandboxol.com/clan/api/v1/clan/tribe/base")
+                .load("GET",http_dn + "/clan/api/v1/clan/tribe/base")
                 .setHeader("userId", userId)
                 .setHeader("Access-Token", access_token)
                 .asJsonObject()
@@ -552,13 +530,13 @@ public class Util {
     public static void bcollect(Context context)
     {
         Ion.with(context)
-                .load("PUT","http://mods.sandboxol.com/user/api/v1/users/"+userId+"/daily/tasks/ads")
+                .load("PUT",http_dn+"/user/api/v1/users/"+userId+"/daily/tasks/ads")
                 .setHeader("userId", userId)
                 .setHeader("Access-Token", access_token)
                 .asJsonObject();
 
         Ion.with(context)
-                .load("PUT","http://mods.sandboxol.com/user/api/v1/users/"+userId+"/daily/tasks/ads")
+                .load("PUT",http_dn+"/user/api/v1/users/"+userId+"/daily/tasks/ads")
                 .setHeader("userId", userId)
                 .setHeader("Access-Token", access_token)
                 .asJsonObject();
@@ -574,7 +552,7 @@ public class Util {
         json.addProperty("name", cName);
 
         Ion.with(context)
-                .load("PUT","http://d32gv25kv9q34j.cloudfront.net/clan/api/v1/clan/tribe")
+                .load("PUT",http_dn + "/clan/api/v1/clan/tribe")
                 .setHeader("userId", userId)
                 .setHeader("Access-Token", access_token)
                 .setJsonObjectBody(json)

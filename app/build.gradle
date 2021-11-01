@@ -6,8 +6,8 @@ android {
         applicationId "cf.androefi.xenone"
         minSdkVersion 19
         targetSdkVersion 30
-        versionCode 13
-        versionName "1.0.3"
+        versionCode 14
+        versionName "1.0.4"
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
     }
     buildTypes {

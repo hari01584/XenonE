@@ -5,12 +5,28 @@
     <item>g1018</item>
     <item>g1014</item>
     <item>g1042</item>
+    <item>g1009</item>
+    <item>g1001</item>
+    <item>g1010</item>
+    <item>g1016</item>
+    <item>g1025</item>
+    <item>g1027</item>
+    <item>g1030</item>
+    <item>g1037</item>
   </string-array>
 
   <string-array name="vals_minigames">
     <item>Bedwars</item>
     <item>Eggwars</item>
     <item>Survival</item>
-    <item>Build and Shoot</item>
+    <item>Build and Shoots</item>
+    <item>Murder mystery</item>
+    <item>Survival Games</item>
+    <item>TNT Run</item>
+    <item>PUBG: Battlefield</item>
+    <item>Hero tycoon 2</item>
+    <item>Sky royale</item>
+    <item>Snowman Defender</item>
+    <item>Hide and seek 2</item>
   </string-array>
 </resources>

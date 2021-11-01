@@ -66,6 +66,11 @@ public class main extends Fragment {
                             Toast.LENGTH_LONG).show();
                     return;
                 }
+                if(psd.isEmpty()){
+                    Toast.makeText(getActivity(), "Automatic password login is no longer working due to recent blockman updates.. Please enter your password manually and try again! :(",
+                        Toast.LENGTH_LONG).show();
+                    return;
+                }
                 Util.login(getActivity());
             }
         });
