@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
         adapter.addFragment(new main(), "Main");
         adapter.addFragment(new Supp(), "Support!");
         adapter.addFragment(new gif(), "Gif");
-        adapter.addFragment(new bcubes(), "Bcubes!");
+        adapter.addFragment(new bcubes(), "Other!");
         //adapter.addFragment(new VPN(), "VPN And Data");
         adapter.addFragment(new Tools(), "Misc!");
         viewPager.setAdapter(adapter);
