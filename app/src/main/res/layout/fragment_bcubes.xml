@@ -6,17 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".bcubes">
 
-
-    <Button
-        android:id="@+id/bcw"
-        android:layout_width="match_parent"
-        android:layout_height="54dp"
-        android:layout_marginTop="15dp"
-        android:text="Get Your BCUBES!"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <com.skydoves.powerspinner.PowerSpinnerView
       android:id="@+id/powerSpinnerView"
       android:layout_width="match_parent"
@@ -48,8 +37,7 @@
       android:fontFamily="serif-monospace"
       android:text="Rickroll Items! (Minigame Item Draw)"
       android:textSize="16sp"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/bcw" />
+      app:layout_constraintStart_toStartOf="parent" />
 
     <Button
       android:id="@+id/button2"
