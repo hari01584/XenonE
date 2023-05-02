@@ -151,7 +151,7 @@ public class Util {
         }
         else if ( lStatus()==2){
             JsonObject json = new JsonObject();
-            json.addProperty("appType", "android");
+            json.addProperty("appType", "web");
             json.addProperty("hasPassword", "True");
             json.addProperty("needReward", 0);
             json.addProperty("packageName", "com.sandboxol.blockymods");
@@ -527,21 +527,21 @@ public class Util {
 
     }
 
-    public static void bcollect(Context context)
-    {
-        Ion.with(context)
-                .load("PUT",http_dn+"/user/api/v1/users/"+userId+"/daily/tasks/ads")
-                .setHeader("userId", userId)
-                .setHeader("Access-Token", access_token)
-                .asJsonObject();
+    //public static void bcollect(Context context)
+    //{
+    //    Ion.with(context)
+    //            .load("PUT",http_dn+"/user/api/v1/users/"+userId+"/daily/tasks/ads")
+    //            .setHeader("userId", userId)
+    //            .setHeader("Access-Token", access_token)
+    //            .asJsonObject();
 
-        Ion.with(context)
-                .load("PUT",http_dn+"/user/api/v1/users/"+userId+"/daily/tasks/ads")
-                .setHeader("userId", userId)
-                .setHeader("Access-Token", access_token)
-                .asJsonObject();
+    //    Ion.with(context)
+    //            .load("PUT",http_dn+"/user/api/v1/users/"+userId+"/daily/tasks/ads")
+    //            .setHeader("userId", userId)
+    //            .setHeader("Access-Token", access_token)
+    //            .asJsonObject();
 
-    }
+    //}
 
     public static void changD(String link, final Context context, int cId, String cName, String det)
     {
