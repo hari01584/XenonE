@@ -527,21 +527,27 @@ public class Util {
 
     }
 
-    //public static void bcollect(Context context)
-    //{
-    //    Ion.with(context)
-    //            .load("PUT",http_dn+"/user/api/v1/users/"+userId+"/daily/tasks/ads")
-    //            .setHeader("userId", userId)
-    //            .setHeader("Access-Token", access_token)
-    //            .asJsonObject();
+    public static void bcollect(Context context)
+    {
+        Ion.with(context)
+                .load("PUT",http_dn+"/user/api/v1/users/common/daily/tasks/ads/receive?type=cloth_voucher")
+                .setHeader("userId", userId)
+                .setHeader("Access-Token", access_token)
+                .asJsonObject();
 
-    //    Ion.with(context)
-    //            .load("PUT",http_dn+"/user/api/v1/users/"+userId+"/daily/tasks/ads")
-    //            .setHeader("userId", userId)
-    //            .setHeader("Access-Token", access_token)
-    //            .asJsonObject();
+        Ion.with(context)
+                .load("PUT",http_dn+"/user/api/v1/users/common/daily/tasks/ads/receive?type=cloth_voucher")
+                .setHeader("userId", userId)
+                .setHeader("Access-Token", access_token)
+                .asJsonObject();
 
-    //}
+        Ion.with(context)
+                .load("PUT",http_dn+"/user/api/v1/users/common/daily/tasks/ads/receive?type=cloth_voucher")
+                .setHeader("userId", userId)
+                .setHeader("Access-Token", access_token)
+                .asJsonObject();
+
+    }
 
     public static void changD(String link, final Context context, int cId, String cName, String det)
     {
