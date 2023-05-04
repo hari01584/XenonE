@@ -26,28 +26,28 @@ public class bcubes extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         powerSpin = getView().findViewById(R.id.powerSpinnerView);
 
-        //Button dm = getActivity().findViewById(R.id.bcw);
-        //dm.setOnClickListener(new View.OnClickListener() {
-        //    @Override
-        //    public void onClick(View view)
-        //    {
-        //        if(Util.userId.isEmpty()){
-        //            Toast.makeText(getContext(), "Please Login First B4 Using This Feature!!",
-        //                    Toast.LENGTH_LONG).show();
-        //            return;
-        //        }
-        //        Util.bcollect(getContext());
-        //        Toast.makeText(getContext(), "Done You Got MAX Cubes For TODAY!!!",
-        //                Toast.LENGTH_LONG).show();
-        //    }
-        //});
+        Button dm = getActivity().findViewById(R.id.bcw);
+        dm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view)
+            {
+                if(Util.userId.isEmpty()){
+                    Toast.makeText(getContext(), "Please Login First To Use This Feature!!",
+                            Toast.LENGTH_LONG).show();
+                    return;
+                }
+                Util.bcollect(getContext());
+                Toast.makeText(getContext(), "Done You Got MAX Coupons For TODAY!!!",
+                        Toast.LENGTH_LONG).show();
+            }
+        });
 
         Button bt2 = getActivity().findViewById(R.id.button2);
         bt2.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(Util.userId.isEmpty()){
-                    Toast.makeText(getContext(), "Please Login First B4 Using This Feature!!",
+                    Toast.makeText(getContext(), "Please Login First To Use This Feature!!",
                         Toast.LENGTH_LONG).show();
                     return;
                 }
