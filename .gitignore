@@ -11,3 +11,6 @@
 /build
 /captures
 .externalNativeBuild
+
+keystore.jks
+sign_and_release.sh
