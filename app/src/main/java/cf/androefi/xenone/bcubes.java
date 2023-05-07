@@ -32,12 +32,12 @@ public class bcubes extends Fragment {
             public void onClick(View view)
             {
                 if(Util.userId.isEmpty()){
-                    Toast.makeText(getContext(), "Please Login First B4 Using This Feature!!",
+                    Toast.makeText(getContext(), "Please Login First To Use This Feature!!",
                             Toast.LENGTH_LONG).show();
                     return;
                 }
                 Util.bcollect(getContext());
-                Toast.makeText(getContext(), "Done You Got MAX Cubes For TODAY!!!",
+                Toast.makeText(getContext(), "Done You Got MAX Coupons For TODAY!!!",
                         Toast.LENGTH_LONG).show();
             }
         });
@@ -47,7 +47,7 @@ public class bcubes extends Fragment {
             @Override
             public void onClick(View v) {
                 if(Util.userId.isEmpty()){
-                    Toast.makeText(getContext(), "Please Login First B4 Using This Feature!!",
+                    Toast.makeText(getContext(), "Please Login First To Use This Feature!!",
                         Toast.LENGTH_LONG).show();
                     return;
                 }
