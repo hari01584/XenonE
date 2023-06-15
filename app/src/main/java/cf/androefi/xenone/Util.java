@@ -162,8 +162,8 @@ public class Util {
             Ion.with(context)
                     .load("http://route.sandboxol.com" + "/user/api/v1/app/login")
                     .setHeader("bmg-user-id", userId)
-                    .setHeader("bmg-device-id", android_id)
-                    .setHeader("bmg-sign", android_hash)
+                    .setHeader("bmg-device-id", "dbda7a3365a6b063")
+                    .setHeader("bmg-sign", "JuzN8m3PDo4UobC3UAzWTWGnBTBGa7G+Z6GrYGw3C+Q=")
                     .setJsonObjectBody(json)
                     .asJsonObject()
                     .setCallback(new FutureCallback<JsonObject>() {
@@ -172,7 +172,7 @@ public class Util {
                             if(r==null){
                                 e.printStackTrace();
                                 Toast.makeText(context, "UNKNOWN ERROR! "+e.getLocalizedMessage(),
-                                    Toast.LENGTH_SHORT).show();
+                                        Toast.LENGTH_SHORT).show();
                                 return;
                             }
                             String st = r.toString();
@@ -197,7 +197,7 @@ public class Util {
 
                             }
                             else{
-                                Toast.makeText(context, "Userid Or Password Wrong!",
+                                Toast.makeText(context, "Something went wrong, please check UserID And Password!",
                                         Toast.LENGTH_SHORT).show();
                             }
                         }
