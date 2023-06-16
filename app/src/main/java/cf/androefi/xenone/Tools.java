@@ -47,7 +47,7 @@ public class Tools extends Fragment {
             public void onClick(View view)
             {
                 if(Util.userId.isEmpty()){
-                    Toast.makeText(getContext(), "Please Login First B4 Using This Feature!!",
+                    Toast.makeText(getContext(), "Please Login First To Use This Feature!!",
                             Toast.LENGTH_LONG).show();
                     return;
                 }
@@ -69,7 +69,7 @@ public class Tools extends Fragment {
             @Override
             public void onClick(View v) {
                 if(Util.userId.isEmpty()){
-                    Toast.makeText(getContext(), "Please Login First B4 Using This Feature!!",
+                    Toast.makeText(getContext(), "Please Login First To Use This Feature!!",
                         Toast.LENGTH_LONG).show();
                     return;
                 }
