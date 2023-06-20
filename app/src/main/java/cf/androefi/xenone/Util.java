@@ -35,6 +35,7 @@ public class Util {
     public static String android_hash;
     public static String userId = "";
     public static String userPass = "";
+    public static String capthacode = "";
     public static String access_token = "";
     public static String http_dn = "";
     public static String https_dn = "";
@@ -157,13 +158,11 @@ public class Util {
             json.addProperty("packageName", "com.sandboxol.blockymods");
             json.addProperty("password", userPass);
             json.addProperty("uid", userId);
+            json.addProperty("code", capthacode);
 
 
             Ion.with(context)
-                    .load("http://route.sandboxol.com" + "/user/api/v1/app/login")
-                    .setHeader("bmg-user-id", userId)
-                    .setHeader("bmg-device-id", "dbda7a3365a6b063")
-                    .setHeader("bmg-sign", "JuzN8m3PDo4UobC3UAzWTWGnBTBGa7G+Z6GrYGw3C+Q=")
+                    .load("http://route.sandboxol.com" + "/user/api/v1/login")
                     .setJsonObjectBody(json)
                     .asJsonObject()
                     .setCallback(new FutureCallback<JsonObject>() {
@@ -172,11 +171,30 @@ public class Util {
                             if(r==null){
                                 e.printStackTrace();
                                 Toast.makeText(context, "UNKNOWN ERROR! "+e.getLocalizedMessage(),
-                                        Toast.LENGTH_SHORT).show();
+                                Toast.LENGTH_SHORT).show();
                                 return;
                             }
+
                             String st = r.toString();
                             Log.d(TAG, st);
+
+                            if(st.contains("INNER ERROR")) {
+                                Toast.makeText(context, "This login system does not support nicknames with illegal characters, please change your nickname if you want to use XenonE :(!",
+                                Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+
+                            if(st.contains("INVALID CODE")) {
+                                Toast.makeText(context, "Code Is Wrong!",
+                                Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+
+                            if(st.contains("invalid params")) {
+                                Toast.makeText(context, "ERROR! Invalid Params!!",
+                                Toast.LENGTH_SHORT).show();
+                                return;
+                            }
 
                             if(st.contains("userId"))
                             {
