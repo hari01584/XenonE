@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
         adapter.addFragment(new bcubes(), "Other!");
         //adapter.addFragment(new VPN(), "VPN And Data");
         adapter.addFragment(new Tools(), "Misc!");
+        adapter.addFragment(new credits(),"Credits!");
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
 
